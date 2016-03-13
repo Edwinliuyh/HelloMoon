@@ -7,12 +7,14 @@ import android.media.MediaPlayer;
  * Created by dell on 2016/3/13.
  */
 public class AudioPlayer {
+    public int currentState=0;
     private MediaPlayer mPlayer;
 
     public void stop(){
         if (mPlayer!=null){
-            mPlayer.release();
             mPlayer= null;
+            mPlayer.release();
+            currentState=0;
         }
     }
 
@@ -26,6 +28,25 @@ public class AudioPlayer {
             }
         });
         mPlayer.start();
+        currentState++;
+    }
+
+    public void pause(){
+        mPlayer.pause();
+    }
+
+    public void resume(){
+        mPlayer.setOnCompletionListener (new MediaPlayer.OnCompletionListener(){
+            public void onCompletion(MediaPlayer mp){
+                //音频文件完成播放后，立即调用stop()方法，尽可能快地释放MediaPlayer实例
+                stop();
+            }
+        });
+        mPlayer.start();
+    }
+
+    public boolean isPlaying() {
+        return mPlayer.isPlaying();
     }
 
 }

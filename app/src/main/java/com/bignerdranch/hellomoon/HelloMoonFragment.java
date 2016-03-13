@@ -14,7 +14,9 @@ public class HelloMoonFragment extends android.support.v4.app.Fragment{
     private Button mPlayButton;
     private Button mStopButton;
     private AudioPlayer mPlayer = new AudioPlayer();
-
+//    private static final int State_Play=0;
+//    private static final int State_Pause=1;
+//    private static final int State_Resume=2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
@@ -22,7 +24,19 @@ public class HelloMoonFragment extends android.support.v4.app.Fragment{
         mPlayButton=(Button) v.findViewById(R.id.hellomoon_playButton);
         mPlayButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                mPlayer.play(getActivity());
+
+                if (mPlayer.currentState==0){
+                    mPlayer.play(getActivity());
+                    mPlayButton.setText(R.string.hellomoon_pause);
+                }
+                else if (mPlayer.isPlaying()){
+                    mPlayer.pause();
+                    mPlayButton.setText(R.string.hellomoon_play);
+                }else {
+                    mPlayer.resume();
+                    mPlayButton.setText(R.string.hellomoon_pause);
+                }
+
             }
         });
         mStopButton=(Button) v.findViewById(R.id.hellomoon_stopButton);
@@ -31,6 +45,7 @@ public class HelloMoonFragment extends android.support.v4.app.Fragment{
                 mPlayer.stop();
             }
         });
+
         return v;
     }
 
