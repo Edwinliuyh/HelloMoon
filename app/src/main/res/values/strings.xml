@@ -6,4 +6,5 @@
     <string name="hellomoon_stop">Stop</string>
     <string name="hellomoon_pause">Pause</string>
     <string name="hellomoon_description">Neil Armstrong onto the moon</string>
+    <string name="hellomoon_video">Video</string>
 </resources>
